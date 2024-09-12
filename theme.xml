@@ -16,16 +16,6 @@ license:       creative commons CC-BY-NC-SA
       <themeCustomizationsPath>./resources/customizations/art-book-next/</themeCustomizationsPath>
    </variables>
 
-   <!-- Aspect Ratio -->
-   <subset name="aspect-ratio" displayName="Aspect Ratio">
-      <include name="16-9" displayName="16:9">./aspect-ratio-16-9.xml</include>
-      <include name="16-10" displayName="16:10">./aspect-ratio-16-10.xml</include>
-      <include name="4-3" displayName="4:3">./aspect-ratio-4-3.xml</include>
-      <include name="3-2" displayName="3:2">./aspect-ratio-3-2.xml</include>
-      <include name="5-3" displayName="5:3">./aspect-ratio-5-3.xml</include>
-      <include name="1-1" displayName="1:1">./aspect-ratio-1-1.xml</include>
-   </subset>
-
    <!-- Color Scheme -->
    <include>./colors.xml</include>
    <subset name="color-scheme" displayName="Color Scheme">
@@ -55,14 +45,6 @@ license:       creative commons CC-BY-NC-SA
       <include name="fullscreen-custom" displayName="Fullscreen Artwork (Custom)" />
    </subset>
 
-   <!-- Gamelist View Style -->
-   <subset name="gamelist-view-style" displayName="Gamelist View: Style">
-      <include name="metadata-on" displayName="Metadata On" />
-      <include name="metadata-on-immersive" displayName="Metadata On (Immersive)" />
-      <include name="metadata-off" displayName="Metadata Off" />
-      <include name="metadata-off-immersive" displayName="Metadata Off (Immersive)" />
-   </subset>
-
    <!-- Gamelist View Loop Video -->
    <subset name="gamelist-loop-video" displayName="Gamelist View: Loop Video">
       <include name="off" displayName="Off" />
@@ -70,18 +52,15 @@ license:       creative commons CC-BY-NC-SA
    </subset>
 
    <view name="screen">
-      <controllerActivity name="controllerActivity">
-         <visible>false</visible>
-      </controllerActivity>
       <text name="clock">
-         <pos>1 1</pos>
-         <size>0.4 0.07</size>
+         <size>0 0</size>
          <fontSize>0.04</fontSize>
-         <alignment>right</alignment>
-         <verticalAlignment>center</verticalAlignment>
+         <pos>0.910 0.015</pos>
          <color>${statusBarIconColor}</color>
       </text>
       <batteryIndicator name="batteryIndicator">
+         <pos>0.03 0.018</pos>
+         <size>0.068</size>
          <color>${statusBarIconColor}</color>
          <itemSpacing>0</itemSpacing>
          <full>./_inc/images/battery-100-vertical.svg</full>
@@ -92,6 +71,13 @@ license:       creative commons CC-BY-NC-SA
          <incharge>./_inc/images/battery-charging-vertical.svg</incharge>
          <networkIcon>./_inc/images/wifi-vertical.svg</networkIcon>
       </batteryIndicator>
+      <helpsystem name="help">
+         <z-index>55</z-index>
+         <textColor>eeeeee</textColor>
+         <iconColor>eeeeee</iconColor>
+         <origin>0 0</origin>
+         <pos>1 1</pos>
+      </helpsystem>
    </view>
 
    <view name="system,basic,detailed,video">
@@ -115,14 +101,14 @@ license:       creative commons CC-BY-NC-SA
          <zIndex>0</zIndex>
       </image>
    </view>
-
+   
    <view name="system">
       <image name="logo">
          <color>${systemLogoColor}</color>
       </image>
       <text name="logoText">
          <color>${systemLogoColor}</color>
-         <fontSize>0.15</fontSize>
+         <fontSize>0.0875</fontSize><!-- 42 -->
       </text>
       <carousel name="systemcarousel">
          <origin>0 0</origin>
@@ -130,9 +116,9 @@ license:       creative commons CC-BY-NC-SA
          <size>1 1</size>
          <color>00000000</color>
          <type>horizontal</type>
-         <logoScale>2</logoScale>
-         <logoSize>0.25 0.15</logoSize>
-         <maxLogoCount>2</maxLogoCount>
+         <logoScale>1</logoScale>
+         <logoSize>1.025 1.025</logoSize>
+         <maxLogoCount>3</maxLogoCount>
          <maxLogoCount ifSubset="system-view-style:centered-one-logo">1</maxLogoCount>
          <scrollSound>./_inc/sounds/scroll.wav</scrollSound>
          <defaultTransition>instant</defaultTransition>
@@ -159,6 +145,34 @@ license:       creative commons CC-BY-NC-SA
       <image name="background" extra="true">
          <color>000000</color>
       </image>
+   </view>
+
+   <view name="system">
+      <image ifSubset="system-view-style:fullscreen-custom" name="system-art" extra="true">
+         <size>0 1</size>
+      </image>
+      <image name="syslogo" extra="true">
+         <origin>0.5 0.5</origin>
+         <pos>0.5 0.5</pos>
+         <maxSize>0.7 0.5</maxSize>
+         <zIndex>50</zIndex>
+         <color>${systemLogoColor}</color>
+         <path>./_inc/systems/${system.theme}_logo.png</path>
+         <path>./_inc/systems/${system.theme}.svg</path>
+      </image>
+      <text name="systemInfo">
+         <zIndex>44</zIndex>
+         <pos>0.0 0.91125</pos>
+         <backgroundColor>00000000</backgroundColor>
+         <color>ffffff</color>
+	      <fontSize>0.03</fontSize>
+         <zIndex>44</zIndex>	     
+      </text>     
+      <helpsystem name="help">
+         <textColor>eeeeee</textColor>
+         <iconColor>eeeeee</iconColor>
+         <z-index>55</z-index>
+      </helpsystem>
    </view>
 
    <view name="basic,detailed,video">
@@ -266,7 +280,7 @@ license:       creative commons CC-BY-NC-SA
          <color>${gamelistListDescriptionColor}</color>
          <forceUppercase>false</forceUppercase>
       </text>
-      <image ifSubset="gamelist-view-style:metadata-on|metadata-on-immersive|metadata-off" name="game-metadata-background" extra="true">
+      <image name="game-metadata-background" extra="true">
          <origin>0 0</origin>
          <path>${spacerImage}</path>
          <tile>true</tile>
@@ -275,10 +289,15 @@ license:       creative commons CC-BY-NC-SA
       </image>
    </view>
 
+   <!-- Aspect Ratio -->
+   <subset name="aspect-ratio" displayName="Aspect Ratio">
+      <include name="4-3" displayName="4:3">./aspect-ratio-4-3.xml</include>
+      <include name="1-1" displayName="1:1">./aspect-ratio-1-1.xml</include>
+   </subset>
+
    <view name="detailed">
       <image name="md_image">
          <origin>0.5 0.5</origin>
-         <color ifSubset="gamelist-view-style:metadata-on-immersive|metadata-off-immersive">FFFFFF99</color>
          <zIndex>3</zIndex>
       </image>
    </view>
@@ -290,8 +309,6 @@ license:       creative commons CC-BY-NC-SA
          <effect>none</effect>
          <showSnapshotDelay>true</showSnapshotDelay>
          <showSnapshotNoVideo>true</showSnapshotNoVideo>
-         <color ifSubset="gamelist-view-style:metadata-on-immersive">FFFFFFDD</color>
-         <color ifSubset="gamelist-view-style:metadata-off-immersive">FFFFFF99</color>
          <zIndex>3</zIndex>
          <loops ifSubset="gamelist-loop-video:off">0</loops>
          <loops ifSubset="gamelist-loop-video:on">-1</loops>
@@ -311,7 +328,7 @@ license:       creative commons CC-BY-NC-SA
       </menuText>
       <menuText name="menutext">
          <fontPath>${fontBold}</fontPath>
-         <fontSize>0.035</fontSize>
+         <fontSize>0.0375</fontSize>
          <color>ffffff77</color>
          <separatorColor>ffffff11</separatorColor>
          <selectedColor>ffffff</selectedColor>
